@@ -12,5 +12,6 @@ export default defineNuxtConfig({
     public: {
       apiBase: 'http://localhost:8080/v1/api'
     }
-  }
+  },
+  modules: ['@pinia/nuxt']
 })
