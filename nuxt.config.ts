@@ -7,5 +7,11 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   vite: {
     plugins: [tailwindcss()],
-  }
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:8080/v1/api'
+    }
+  },
+  modules: ['@pinia/nuxt']
 })
