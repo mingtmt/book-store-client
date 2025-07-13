@@ -4,7 +4,7 @@
       <h1 class="text-2xl font-bold text-center mb-1">Welcome Back! 👋</h1>
       <p class="text-center text-gray-500 mb-6">Sign in to your account</p>
 
-      <form @submit.prevent="handleSignIn" class="space-y-4">
+      <form class="space-y-4" @submit.prevent="handleSignIn">
         <input
           v-model="username"
           type="username"
@@ -25,9 +25,9 @@
             <input v-model="rememberMe" type="checkbox" />
             Remember me
           </label>
-          <NuxtLink to="/auth/forgot-password" class="hover:underline">
+          <!-- <NuxtLink to="/auth/forgot-password" class="hover:underline">
             Forgot password?
-          </NuxtLink>
+          </NuxtLink> -->
         </div>
 
         <button
@@ -40,7 +40,10 @@
 
       <p class="text-center text-sm text-gray-600 mt-6">
         Don’t have an account?
-        <NuxtLink to="/auth/signup" class="font-medium text-black hover:underline">
+        <NuxtLink
+          to="/auth/signup"
+          class="font-medium text-black hover:underline"
+        >
           Sign Up
         </NuxtLink>
       </p>
@@ -49,35 +52,37 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '~/stores/authStore'
-import { useRouter } from 'vue-router'
+import { useAuthStore } from "~/stores/authStore";
+import { useRouter } from "vue-router";
 
-const api = useApi()
-const router = useRouter()
-const auth = useAuthStore()
+const api = useApi();
+const router = useRouter();
+const auth = useAuthStore();
 
-const username = ref('')
-const password = ref('')
-const rememberMe = ref(false)
+const username = ref("");
+const password = ref("");
+const rememberMe = ref(false);
 
 async function handleSignIn() {
   try {
-    const res = await api.post('auth/login', {
-      json: { username: username.value, password: password.value }
-    }).json<{ token: string }>()
+    const res = await api
+      .post("auth/login", {
+        json: { username: username.value, password: password.value },
+      })
+      .json<{ token: string }>();
 
-    auth.setAuth(res.token)
+    auth.setAuth(res.token);
 
     if (rememberMe.value) {
-      useCookie('token', { maxAge: 60 * 60 * 24 * 7 }).value = res.token
+      useCookie("token", { maxAge: 60 * 60 * 24 * 7 }).value = res.token;
     } else {
-      useCookie('token').value = res.token
+      useCookie("token").value = res.token;
     }
 
-    router.push('/')
+    router.push("/");
   } catch (err) {
-    alert('Invalid email or password')
-    console.error('Sign in failed:', err)
+    alert("Invalid email or password");
+    console.error("Sign in failed:", err);
   }
 }
 </script>
