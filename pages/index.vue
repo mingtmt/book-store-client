@@ -1,5 +1,8 @@
 <template>
-  <div class="p-8">
-    <h1 class="text-2xl font-bold">📚 Welcome to Book Store</h1>
-  </div>
+  <section class="p-6">
+    <h1 class="text-3xl font-bold">Welcome to BookStore 📚</h1>
+    <p class="mt-2 text-gray-600">Start browsing your favorite books.</p>
+  </section>
 </template>
+
+<script setup></script>

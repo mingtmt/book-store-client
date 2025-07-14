@@ -1,17 +1,33 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: "Book Store",
+      meta: [{ name: "description", content: "An amazing online book store" }],
+    },
+  },
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
-  css: ["~/assets/css/main.css"],
-  vite: {
-    plugins: [tailwindcss()],
-  },
   runtimeConfig: {
     public: {
       apiBase: "http://localhost:8080/v1/api",
     },
   },
-  modules: ["@pinia/nuxt", "@nuxt/eslint"],
+  googleFonts: {
+    families: {
+      "Unica One": true,
+      Syne: [400, 800],
+    },
+    display: "swap",
+    inject: true,
+    preconnect: true,
+  },
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    "@nuxt/eslint",
+    "@nuxtjs/google-fonts",
+    "@nuxt/icon",
+  ],
 });
