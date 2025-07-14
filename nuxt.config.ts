@@ -3,11 +3,9 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Book Store',
-      meta: [
-        { name: 'description', content: 'An amazing online book store' }
-      ]
-    }
+      title: "Book Store",
+      meta: [{ name: "description", content: "An amazing online book store" }],
+    },
   },
   compatibilityDate: "2025-05-15",
   devtools: { enabled: true },
