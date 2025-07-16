@@ -28,6 +28,5 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxt/eslint",
     "@nuxtjs/google-fonts",
-    "@nuxt/icon",
   ],
 });

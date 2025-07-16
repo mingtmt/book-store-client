@@ -5,10 +5,10 @@
 
       <div class="flex gap-3">
         <CircleButton>
-          <Icon name="ph:linkedin-logo-light" size="20" class="text-gray-600" />
+          <Icon icon="ph:linkedin-logo-light" class="text-gray-600 w-6 h-6" />
         </CircleButton>
         <CircleButton>
-          <Icon name="ph:github-logo-light" size="20" class="text-gray-600" />
+          <Icon icon="ph:github-logo-light" class="text-gray-600 w-6 h-6" />
         </CircleButton>
       </div>
 
@@ -18,5 +18,6 @@
 </template>
 
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import CircleButton from "./CircleButton.vue";
 </script>
