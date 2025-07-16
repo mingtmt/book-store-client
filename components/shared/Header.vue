@@ -10,7 +10,10 @@
         <Icon icon="ph:bookmark-simple-light" class="text-gray-800 w-6 h-6" />
       </button>
       <button>
-        <Icon icon="ph:shopping-cart-simple-light" class="text-gray-800 w-6 h-6" />
+        <Icon
+          icon="ph:shopping-cart-simple-light"
+          class="text-gray-800 w-6 h-6"
+        />
       </button>
       <button @click="handleProfileClick">
         <Icon icon="ph:user-light" class="text-gray-800 w-6 h-6" />
@@ -20,17 +23,17 @@
 </template>
 
 <script setup lang="ts">
-import { Icon } from '@iconify/vue' 
-import { useAuthStore } from '~/stores/authStore'
-const auth = useAuthStore()
-const router = useRouter()
+import { Icon } from "@iconify/vue";
+import { useAuthStore } from "~/stores/authStore";
+const auth = useAuthStore();
+const router = useRouter();
 
 function handleProfileClick() {
-  console.log(auth.token)
+  console.log(auth.token);
   if (auth.token) {
-    router.push('/user/info')
+    router.push("/user/info");
   } else {
-    router.push('/auth/signin')
+    router.push("/auth/signin");
   }
 }
 </script>
