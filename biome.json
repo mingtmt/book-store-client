@@ -1,0 +1,61 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git" },
+  "files": {
+    "includes": ["**", "!**/node_modules", "!**/.next", "!**/out", "!**/dist", "!**/coverage"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+
+      "a11y": {
+        "noAutofocus": "warn",
+        "useButtonType": "warn",
+        "useValidAnchor": "warn"
+      },
+
+      "style": {
+        "useImportType": "warn"
+      },
+
+      "correctness": {
+        "noUndeclaredDependencies": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": { "quoteStyle": "single", "semicolons": "asNeeded" }
+  },
+  "overrides": [
+    {
+      "includes": ["next.config.*", "postcss.config.*", "tailwind.config.*", "**/*.config.*"],
+      "linter": { "rules": { "style": { "useImportType": "off" } } }
+    },
+    {
+      "includes": ["next-env.d.ts"],
+      "linter": { "enabled": false }
+    },
+    {
+      "includes": ["**/*.mdx"],
+      "linter": { "enabled": false }
+    },
+    {
+      "includes": ["**/*.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noUnknownAtRules": "off"
+          }
+        }
+      }
+    }
+  ]
+}
