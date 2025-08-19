@@ -1,66 +1,62 @@
 'use client'
-
-import { useState } from 'react'
+import { type FormEvent, useState } from 'react'
+import { loginClient } from '@/lib/actions/auth'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    // TODO: call your API endpoint here
-    console.log({ email, password })
+    setLoading(true)
+    setError(null)
+
+    const res = await loginClient({ email, password })
+    setLoading(false)
+
+    if (!res.ok) {
+      setError(res.message ?? 'Login failed')
+      return
+    }
+    window.location.href = '/'
   }
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-md">
+      <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow">
         <h1 className="text-2xl font-bold mb-6 text-center">Sign In</h1>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium">
-              Email
-            </label>
+            <label htmlFor='email' className="block text-sm font-medium">Email</label>
             <input
               type="email"
+              className="w-full mt-1 p-2 border rounded-lg"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="you@example.com"
               required
+              placeholder="you@example.com"
             />
           </div>
-
           <div>
-            <label htmlFor="password" className="block text-sm font-medium">
-              Password
-            </label>
+            <label htmlFor='password' className="block text-sm font-medium">Password</label>
             <input
               type="password"
+              className="w-full mt-1 p-2 border rounded-lg"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="••••••••"
               required
+              placeholder="••••••••"
             />
           </div>
-
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" className="rounded" />
-              Remember me
-            </label>
-            <a href="#" className="text-sm text-blue-600 hover:underline">
-              Forgot password?
-            </a>
-          </div>
-
+          {error && <p className="text-sm text-red-600">{error}</p>}
           <button
+            disabled={loading}
             type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg disabled:opacity-60"
           >
-            Login
+            {loading ? 'Signing in...' : 'Login'}
           </button>
         </form>
       </div>
