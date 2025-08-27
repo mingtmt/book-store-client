@@ -2,6 +2,8 @@
 import { type FormEvent, useState } from 'react'
 import { CiLock, CiMail } from 'react-icons/ci'
 import { loginClient } from '@/lib/actions/auth'
+import { InputWithIcon } from '../../../components/InputWithIcon'
+import { LoginButton } from '../../../components/LoginButton'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -33,28 +35,22 @@ export default function LoginPage() {
         <p className="text-center text-gray-500 mb-6">Sign in to your account</p>
 
         <form onSubmit={onSubmit} className="space-y-4">
-          <div className="relative">
-            <CiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-5 h-5" />
-            <input
-              type="email"
-              className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none placeholder-gray-600"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Email"
-            />
-          </div>
-          <div className="relative">
-            <CiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 w-5 h-5" />
-            <input
-              type="password"
-              className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none placeholder-gray-600"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Password"
-            />
-          </div>
+          <InputWithIcon
+            icon={<CiMail className="w-5 h-5" />}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <InputWithIcon
+            icon={<CiLock className="w-5 h-5" />}
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center gap-2 text-gray-700">
@@ -68,20 +64,16 @@ export default function LoginPage() {
 
           {error && <p className="text-sm text-red-600">{error}</p>}
 
-          <button
-            disabled={loading}
-            type="submit"
-            className="w-full py-2 px-4 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition disabled:opacity-60"
-          >
-            {loading ? 'Loging in...' : 'Login'}
-          </button>
+          <LoginButton disabled={loading} type="submit">
+            {loading ? 'Loging...' : 'Login'}
+          </LoginButton>
         </form>
 
         <hr className="my-6" />
 
         <p className="text-center text-sm text-gray-600">
           Don’t have an account?{' '}
-          <a href="/auth/register" className="font-semibold text-yellow-600 hover:underline">
+          <a href="/register" className="font-semibold text-yellow-600 hover:underline">
             Register
           </a>
         </p>
