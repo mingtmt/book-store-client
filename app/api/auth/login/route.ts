@@ -3,7 +3,7 @@ import ky from 'ky'
 import { NextResponse } from 'next/server'
 import { LoginFormSchema, LoginResponseSchema } from '@/lib/schemas/auth'
 
-const BASE = process.env.AUTH_API_URL
+const BASE = process.env.API_BASE_URL
 
 function readJwtExp(token: string): number | undefined {
   try {
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     }
 
     const raw = await ky
-      .post(`${BASE}/api/v1/auth/login`, {
+      .post(`${BASE}/auth/login`, {
         json: parsed.data,
         headers: { accept: 'application/json' },
       })

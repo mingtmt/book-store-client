@@ -1,8 +1,9 @@
 'use client'
 import { type FormEvent, useState } from 'react'
 import { CiLock, CiMail, CiUser } from 'react-icons/ci'
-import { InputWithIcon } from '../../../components/InputWithIcon'
-import { LoginButton } from '../../../components/LoginButton'
+import { InputWithIcon } from '@/components/InputWithIcon'
+import { LoginButton } from '@/components/LoginButton'
+import { registerClient } from '@/lib/actions/auth'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
@@ -15,19 +16,24 @@ export default function RegisterPage() {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setLoading(true)
     setError(null)
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match')
-      setLoading(false)
+    // quick client-side checks
+    if (!name.trim()) return setError('Name is required')
+    if (age === '' || Number.isNaN(age)) return setError('Age is required')
+    if ((age as number) < 13) return setError('You must be at least 13')
+    if (!email.trim()) return setError('Email is required')
+    if (password.length < 8) return setError('Password must be at least 8 characters')
+    if (password !== confirmPassword) return setError('Passwords do not match')
+
+    setLoading(true)
+    const res = await registerClient({ name: name.trim(), age, email: email.trim(), password })
+
+    if (!res.ok) {
+      setError(res.message ?? 'Registration failed')
       return
     }
-
-    // TODO: Call your register API
-    console.log({ name, age, email, password })
-
-    setLoading(false)
+    window.location.href = '/login?registered=1'
   }
 
   return (
@@ -84,7 +90,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{' '}
-          <a href="/login" className="font-semibold text-yellow-600 hover:underline">
+          <a href="/(auth)/login" className="font-semibold text-yellow-600 hover:underline">
             Login
           </a>
         </p>
