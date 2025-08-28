@@ -1,15 +1,19 @@
 'use client'
+import { useSearchParams } from 'next/navigation'
 import { type FormEvent, useState } from 'react'
 import { CiLock, CiMail } from 'react-icons/ci'
+import { InputWithIcon } from '@/components/InputWithIcon'
+import { LoginButton } from '@/components/LoginButton'
 import { loginClient } from '@/lib/actions/auth'
-import { InputWithIcon } from '../../../components/InputWithIcon'
-import { LoginButton } from '../../../components/LoginButton'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const params = useSearchParams()
+  const justRegistered = params.get('registered') === '1'
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -32,7 +36,13 @@ export default function LoginPage() {
         <h1 className="text-2xl font-bold mb-1 text-center text-gray-800">
           Welcome Back! <span className="inline-block">👋</span>
         </h1>
-        <p className="text-center text-gray-500 mb-6">Sign in to your account</p>
+        <p className="text-center text-gray-500">Sign in to your account</p>
+
+        {justRegistered && (
+          <div className="text-sm rounded-lg bg-green-50 p-2 text-green-700 mb-6">
+            Account created. Please sign in.
+          </div>
+        )}
 
         <form onSubmit={onSubmit} className="space-y-4">
           <InputWithIcon
