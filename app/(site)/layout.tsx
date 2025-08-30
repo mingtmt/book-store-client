@@ -18,7 +18,9 @@ function Header() {
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
         <Link href="/" className="tracking-wide flex items-center gap-2">
           <FiBookOpen className="w-5 h-5" />
-          {'BookStore'.toUpperCase()}
+          <span className='font-unica-one'>
+            {'BookStore'.toUpperCase()}
+          </span>
         </Link>
 
         <nav className="flex items-center gap-4">
